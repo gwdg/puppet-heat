@@ -43,15 +43,16 @@
 #   Defaults to true
 #
 class heat::db (
-  $database_connection     = 'sqlite:////var/lib/heat/heat.sqlite',
-  $database_idle_timeout   = $::os_service_default,
-  $database_min_pool_size  = $::os_service_default,
-  $database_max_pool_size  = $::os_service_default,
-  $database_max_retries    = $::os_service_default,
-  $database_retry_interval = $::os_service_default,
-  $database_max_overflow   = $::os_service_default,
-  $database_db_max_retries = $::os_service_default,
-  $sync_db                 = true,
+  $database_connection          = 'sqlite:////var/lib/heat/heat.sqlite',
+  $database_idle_timeout        = $::os_service_default,
+  $database_min_pool_size       = $::os_service_default,
+  $database_max_pool_size       = $::os_service_default,
+  $database_max_retries         = $::os_service_default,
+  $database_retry_interval      = $::os_service_default,
+  $database_max_overflow        = $::os_service_default,
+  $database_db_max_retries      = $::os_service_default,
+  $sync_db                      = true,
+  $database_slave_connection    = $::os_service_default,
 ) {
 
   include ::heat::deps
@@ -71,14 +72,15 @@ class heat::db (
     '^(sqlite|mysql(\+pymysql)?|postgresql):\/\/(\S+:\S+@\S+\/\S+)?')
 
   oslo::db { 'heat_config':
-    connection     => $database_connection_real,
-    idle_timeout   => $database_idle_timeout_real,
-    min_pool_size  => $database_min_pool_size_real,
-    max_pool_size  => $database_max_pool_size_real,
-    max_retries    => $database_max_retries_real,
-    retry_interval => $database_retry_interval_real,
-    max_overflow   => $database_max_overflow_real,
-    db_max_retries => $database_db_max_retries,
+    connection          => $database_connection_real,
+    idle_timeout        => $database_idle_timeout_real,
+    min_pool_size       => $database_min_pool_size_real,
+    max_pool_size       => $database_max_pool_size_real,
+    max_retries         => $database_max_retries_real,
+    retry_interval      => $database_retry_interval_real,
+    max_overflow        => $database_max_overflow_real,
+    db_max_retries      => $database_db_max_retries,
+    slave_connection    => $database_slave_connection,
   }
 
   if $sync_db_real {
