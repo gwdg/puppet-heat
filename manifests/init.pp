@@ -480,6 +480,7 @@ class heat(
     if $auth_plugin == 'password' {
       heat_config {
         'keystone_authtoken/auth_url':            value => $identity_uri;
+        'keystone_authtoken/auth_uri':            value => $auth_uri;
         'keystone_authtoken/auth_plugin':         value => $auth_plugin;
         'keystone_authtoken/username':            value => $keystone_user;
         'keystone_authtoken/password':            value => $keystone_password, secret => true;
