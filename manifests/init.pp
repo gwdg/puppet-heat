@@ -207,6 +207,10 @@
 #   Value can be a string or a list.
 #   Defaults to $::os_service_default
 #
+# [*notification_topics*]
+#   (optional) AMQP topic used for OpenStack notifications
+#   Defaults to ::os_service_default
+#
 # [*keystone_ec2_uri*]
 #
 # [*database_connection*]
@@ -414,6 +418,7 @@ class heat(
   $max_json_body_size                 = $::os_service_default,
   $notification_transport_url         = $::os_service_default,
   $notification_driver                = $::os_service_default,
+  $notification_topics                = $::os_service_default,
   $enable_proxy_headers_parsing       = $::os_service_default,
   $heat_clients_url                   = $::os_service_default,
   $purge_config                       = false,
@@ -592,6 +597,7 @@ class heat(
   oslo::messaging::notifications { 'heat_config':
     transport_url => $notification_transport_url,
     driver        => $notification_driver,
+    topics        => $notification_topics,
   }
 
   oslo::messaging::default { 'heat_config':
