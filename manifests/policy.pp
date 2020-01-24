@@ -43,4 +43,7 @@ class heat::policy (
 
   oslo::policy { 'heat_config': policy_file => $policy_path }
 
+  Anchor<| title == 'heat::config::begin' |>
+  -> Class['heat::policy']
+  ~> Anchor<| title == 'heat::config::end' |>
 }
